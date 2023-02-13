@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic4.zhimg.com/v2-985d21138528c1e715ffd18e54fefd36_1440w.jpg?source=172ae18b">
 <meta property="article:published_time" content="2023-02-09T13:30:43.000Z">
-<meta property="article:modified_time" content="2023-02-11T12:36:36.227Z">
+<meta property="article:modified_time" content="2023-02-13T08:58:11.096Z">
 <meta property="article:author" content="Ross">
 <meta property="article:tag" content="网络算法基础课程project1">
 <meta name="twitter:card" content="summary">
@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-11 20:36:36" itemprop="dateModified" datetime="2023-02-11T20:36:36+08:00">2023-02-11</time>
+                <time title="修改时间：2023-02-13 16:58:11" itemprop="dateModified" datetime="2023-02-13T16:58:11+08:00">2023-02-13</time>
               </span>
 
           
@@ -199,7 +199,8 @@
       
         <h1 id="基于klonenet平台的kruskal算法实现"><a href="#基于klonenet平台的kruskal算法实现" class="headerlink" title="基于klonenet平台的kruskal算法实现"></a>基于klonenet平台的kruskal算法实现</h1><p>kruskal算法是是应用于求出最小生成树问题的经典算法。该次作业要求如下：<br>1、使用python获取给定json文件中编制好的网络信息，包括主机mac地址、交换机dpid、带宽、传输延时等；<br>2、选取适宜的数据结构储存读取到的网络信息；<br>3、根据数据结构实现kruskal算法，获取最小生成树路径。    </p>
 <h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><p>对于一个连通无向图G&#x3D;(V, E)，我们希望找到一种连接方式使得所有结点能够连接起来并且拥有最小的边权重之和。如图中红线就是该网络的最小生成树  <img src="https://pic4.zhimg.com/v2-985d21138528c1e715ffd18e54fefd36_1440w.jpg?source=172ae18b" alt="最小生成树">    </p>
-<h2 id="使用贪心策略的解决办法"><a href="#使用贪心策略的解决办法" class="headerlink" title="使用贪心策略的解决办法"></a>使用贪心策略的解决办法</h2><p>知晓贪心的读者应该已经大概知道如何去找到这个最小生成树了，接下来给出提炼的伪码实现</p>
+<h2 id="使用贪心策略的解决办法"><a href="#使用贪心策略的解决办法" class="headerlink" title="使用贪心策略的解决办法"></a>使用贪心策略的解决办法</h2><p>知晓贪心的读者应该已经大概知道如何去找到这个最小生成树了，接下来展示课本《算法导论》中提炼的伪码实现：<br>    A &#x3D; ∅<br>    while A does not from the spanning tree<br>       find an edge(u, v) that is safe for A<br>       A &#x3D; A∪{(u, v)}<br>    return A<br>其中，每次循环A都是某棵最小生成树的子集；而对于A安全的边指的是该条边加入到集合A后不会破坏A的循环不变式。     </p>
+<h3 id="kruskal算法"><a href="#kruskal算法" class="headerlink" title="kruskal算法"></a>kruskal算法</h3><p>kruskal算法便是上文伪代码的一种细化方式，我们很容易地看到贪心策略的解决办法其难点在于安全边的确定。kruskal算法的解决方式是每次都选取边权最小的边来加入集合A。伪代码如下：<br>    A &#x3D; ∅<br>    for each vertex v ∈ G.V<br>       MAKE-SET(v)<br>    sort the edges of G.E into nondecreasing order by weight w<br>    for each edges e(u, v) in G.E<br>       if FIND-SET(u) ≠ FIND-SET(v)<br>         A &#x3D; A∪{(u, v)}<br>         UNION(u, v)<br>    return A<br>也就是说，kruskal算法将图的每一个结点都独立为一个集合（MAKE-SET），再根据边权由小到大进行排序，遍历边的集合时判断边的两个顶点是否属于同一集合（同一棵树），不是则将这条边加入集合A，再将u，v所在集合合并（UNION）。如若u，v顶点属于同一集合依旧将(u,v)边加入A的话那A中集合就会成环，最后结果就不是最小生成树了。</p>
 
     </div>
 
@@ -283,7 +284,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Eklonenet%E5%B9%B3%E5%8F%B0%E7%9A%84kruskal%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">基于klonenet平台的kruskal算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="nav-number">1.1.</span> <span class="nav-text">最小生成树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%B4%AA%E5%BF%83%E7%AD%96%E7%95%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">使用贪心策略的解决办法</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Eklonenet%E5%B9%B3%E5%8F%B0%E7%9A%84kruskal%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">基于klonenet平台的kruskal算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="nav-number">1.1.</span> <span class="nav-text">最小生成树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%B4%AA%E5%BF%83%E7%AD%96%E7%95%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">使用贪心策略的解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kruskal%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">kruskal算法</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
